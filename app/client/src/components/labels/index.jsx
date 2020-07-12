@@ -1,20 +1,34 @@
 import React from "react";
 import styled from "styled-components";
 
-const Labels = () => {
+const Labels = ({ transactions }) => {
+  const expenses = transactions
+    .filter((t) => t.type === "-")
+    .map((t) => t.value)
+    .reduce(function (acc, curr) {
+      return acc + curr;
+    }, 0);
+
+  const revenue = transactions
+    .filter((t) => t.type === "+")
+    .map((t) => t.value)
+    .reduce(function (acc, curr) {
+      return acc + curr;
+    }, 0);
+
   return (
     <LabelsContainer>
       <span>
-        Lançamentos: <LabelData>100</LabelData>
+        Lançamentos: <LabelData>{transactions.length}</LabelData>
       </span>
       <span>
-        Receitas: <LabelData>100</LabelData>
+        Receitas: <LabelData>{revenue}</LabelData>
       </span>
       <span>
-        Despesas: <LabelData>100</LabelData>
+        Despesas: <LabelData>{expenses}</LabelData>
       </span>
       <span>
-        Saldo: <LabelData>100</LabelData>
+        Saldo: <LabelData>{revenue - expenses}</LabelData>
       </span>
     </LabelsContainer>
   );

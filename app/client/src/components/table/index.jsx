@@ -4,17 +4,20 @@ import styled from "styled-components";
 import Card from "./Card";
 
 const Table = (props) => {
-  const { toggleModal, allTransactions } = props;
-
+  const { toggleModal, filteredTransactions } = props;
+  const handleButtonClick = (type, id) => {
+    toggleModal(type, id);
+  };
   return (
     <TableContainer>
-      {allTransactions.map((transaction) => {
+      {filteredTransactions.map((transaction) => {
         return (
           <Card
             key={transaction._id}
+            id={transaction._id}
             day={transaction.day}
             type={transaction.type}
-            onClickButton={toggleModal}
+            onClickButton={handleButtonClick}
             description={transaction.description}
             category={transaction.category}
             value={transaction.value}

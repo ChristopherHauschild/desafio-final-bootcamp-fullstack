@@ -5,12 +5,16 @@ import Add from "./Add";
 import Filter from "./Filter";
 
 const AddAndFilter = (props) => {
-  const { toggleModal } = props;
+  const { toggleModal, changeDescription, description } = props;
+
+  const handleButtonClick = (type) => {
+    toggleModal(type);
+  };
 
   return (
     <AddAndFilterContainer>
-      <Add onNewLaunch={toggleModal} />
-      <Filter />
+      <Add onNewLaunch={handleButtonClick} />
+      <Filter description={description} changeDescription={changeDescription} />
     </AddAndFilterContainer>
   );
 };

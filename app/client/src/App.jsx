@@ -1,34 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-
-import * as api from "./api/apiService";
 
 import Main from "./components/main";
 
 const App = () => {
-  const [allTransactions, setAllTransactions] = useState([]);
-
-  useEffect(() => {
-    const getTransactions = async () => {
-      const transactions = await api.getAll();
-      const transactionPeriod = await api.getByDescription(
-        "Compras em padaria"
-      );
-      const transactionPP = await api.getByYearMonth("2019-01");
-      console.log(transactionPeriod);
-      console.log(transactionPP);
-      setAllTransactions(transactions);
-    };
-
-    getTransactions();
-  }, []);
-
   return (
     <Container>
       <Title>Bootcamp Full Stack - Desafio Final</Title>
       <Subtitle>Controle Financeiro Pessoal</Subtitle>
 
-      <Main allTransactions={allTransactions} />
+      <Main />
     </Container>
   );
 };

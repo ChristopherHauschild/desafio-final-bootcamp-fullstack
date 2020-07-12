@@ -4,9 +4,9 @@ import styled from "styled-components";
 import Button from "./Button";
 import periods from "./periods";
 
-const Select = () => {
+const Select = ({ changePeriod }) => {
   const handleChangePeriod = (event) => {
-    console.log(event.target.value);
+    changePeriod(event.target.value);
   };
 
   return (
@@ -17,8 +17,8 @@ const Select = () => {
         <SelectField onChange={handleChangePeriod} name="selectPeriod">
           {periods.map((period) => {
             return (
-              <option key={period} id={period}>
-                {period}
+              <option key={period.id} value={period.id}>
+                {period.value}
               </option>
             );
           })}

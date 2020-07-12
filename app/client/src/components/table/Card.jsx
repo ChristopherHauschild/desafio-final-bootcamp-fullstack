@@ -2,7 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 const Card = (props) => {
-  const { onClickButton, category, description, value, type, day } = props;
+  const { id, onClickButton, category, description, value, type, day } = props;
+
+  const handleClickButton = (type) => {
+    onClickButton(type, id);
+  };
 
   let bg = type === "+" ? "blue" : "red";
 
@@ -15,10 +19,17 @@ const Card = (props) => {
       </Infos>
       <Money>R$ {value}</Money>
       <Actions>
-        <Icon onClick={onClickButton} className="material-icons">
+        <Icon
+          onClick={() => handleClickButton("edit")}
+          name="edit"
+          className="material-icons"
+        >
           edit
         </Icon>
-        <Icon onClick={onClickButton} className="material-icons">
+        <Icon
+          onClick={() => handleClickButton("delete")}
+          className="material-icons"
+        >
           delete
         </Icon>
       </Actions>

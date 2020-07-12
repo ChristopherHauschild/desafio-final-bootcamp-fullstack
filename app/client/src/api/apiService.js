@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "http://localhost:3001/api/transaction/";
+const URL = "http://localhost:3001/api/transaction";
 
 const getAll = async () => {
   const res = await axios.get(URL);
@@ -21,13 +21,4 @@ const getByDescription = async (description) => {
   return transactions;
 };
 
-const getByYearMonth = async (yearMonth) => {
-  const res = await axios.get(`${URL}/${yearMonth}`);
-
-  const transactions = res.data.map((transaction) => {
-    return { ...transaction };
-  });
-  return transactions;
-};
-
-export { getAll, getByDescription, getByYearMonth };
+export { getAll, getByDescription };

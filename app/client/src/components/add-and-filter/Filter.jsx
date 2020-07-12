@@ -1,11 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 
-const Filter = () => {
+const Filter = (props) => {
+  const { changeDescription, description } = props;
+
+  const handleChangeDescription = (event) => {
+    const newValue = event.target.value;
+    changeDescription(newValue);
+  };
+
   return (
     <FilterContainer>
       <label>Busque seus lançamentos</label>
-      <Input type="text" placeholder="Filtrar..." />
+      <Input
+        type="text"
+        value={description}
+        onChange={handleChangeDescription}
+        placeholder="Filtrar..."
+      />
     </FilterContainer>
   );
 };

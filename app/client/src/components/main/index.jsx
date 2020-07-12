@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+
+import * as api from "../../api/apiService";
 
 import Select from "../select";
 import Labels from "../labels";
@@ -8,10 +10,40 @@ import Table from "../table";
 
 import Modal from "../modal";
 
-const Main = ({ allTransactions }) => {
+const Main = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [allTransactions, setAllTransactions] = useState([]);
+  const [typeAction, setTypeAction] = useState("");
+  const [idAction, setIdAction] = useState("");
+  const [period, setPeriod] = useState("2019-01");
+  const [description, setDescription] = useState("");
 
-  const handleModalOpen = () => {
+  useEffect(() => {
+    const getTransactions = async () => {
+      const transactions = await api.getAll();
+
+      const filteredTransactions = transactions.filter(
+        (t) => t.yearMonth === period && t.description.includes(description)
+      );
+
+      setAllTransactions(filteredTransactions);
+    };
+
+    getTransactions();
+  }, [description, period]);
+
+  const handleChangePeriod = (newValue) => {
+    setPeriod(newValue);
+  };
+
+  const handleChangeDescription = (newValue) => {
+    setDescription(newValue);
+  };
+
+  const handleModalOpen = (type, id) => {
+    setIdAction(id);
+
+    setTypeAction(type);
     setIsModalOpen(true);
   };
 
@@ -21,12 +53,26 @@ const Main = ({ allTransactions }) => {
 
   return (
     <ContainerMain>
-      <Select />
-      <Labels />
-      <AddAndFilter toggleModal={handleModalOpen} />
-      <Table allTransactions={allTransactions} toggleModal={handleModalOpen} />
+      <Select changePeriod={handleChangePeriod} />
+      <Labels transactions={allTransactions} />
+      <AddAndFilter
+        description={description}
+        changeDescription={handleChangeDescription}
+        toggleModal={handleModalOpen}
+      />
+      <Table
+        filteredTransactions={allTransactions}
+        toggleModal={handleModalOpen}
+      />
 
-      {isModalOpen && <Modal handleModalClose={handleModalClose} />}
+      {isModalOpen && (
+        <Modal
+          transactions={allTransactions}
+          type={typeAction}
+          id={idAction}
+          handleModalClose={handleModalClose}
+        />
+      )}
     </ContainerMain>
   );
 };

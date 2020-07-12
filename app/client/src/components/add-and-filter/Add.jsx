@@ -4,8 +4,15 @@ import styled from "styled-components";
 const Add = (props) => {
   const { onNewLaunch } = props;
 
+  const handleButtonClick = (type) => {
+    onNewLaunch(type);
+  };
+
   return (
-    <AddButton onClick={onNewLaunch} className="waves-effect waves-light btn">
+    <AddButton
+      onClick={() => handleButtonClick("add")}
+      className="waves-effect waves-light btn"
+    >
       <i className="material-icons left">add</i> Novo Lançamento
     </AddButton>
   );

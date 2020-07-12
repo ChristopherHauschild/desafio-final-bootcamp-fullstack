@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import Modal from "react-modal";
 import ButtonClose from "./ButtonClose";
-import ButtonSave from "./ButtonSave";
 import Radios from "./Radio";
 
 import "./modal.css";
@@ -11,45 +10,120 @@ import "./modal.css";
 Modal.setAppElement("#root");
 
 const ContainerModal = (props) => {
-  const { handleModalClose } = props;
+  const { handleModalClose, transactions, id, type } = props;
+  const transaction = transactions.filter((t) => t._id === id);
+
+  const [description, setDescription] = useState(
+    transaction.map((t) => t.description)
+  );
+  const [category, setCategory] = useState(transaction.map((t) => t.category));
+  const [value, setValue] = useState(transaction.map((t) => t.value));
+  const [date, setDate] = useState(transaction.map((t) => t.yearMonthDay));
 
   const setModalClose = () => {
     handleModalClose(true);
+  };
+
+  const block = type === "delete" ? true : false;
+  const isActionDelete = type === "delete" ? true : false;
+
+  const modalTitle =
+    type === "add" ? "Inclusão" : type === "edit" ? "Alteração" : "Exclusão";
+
+  const handleChange = (event) => {
+    if (event.target.name === "description") {
+      setDescription(event.target.value);
+    }
+    if (event.target.name === "category") {
+      setCategory(event.target.value);
+    }
+    if (event.target.name === "value") {
+      setValue(event.target.value);
+    }
+    if (event.target.name === "date") {
+      setDate(event.target.value);
+    }
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    console.log(description, category, value, date);
   };
 
   return (
     <div>
       <Modal isOpen={true} className="Modal">
         <Header>
-          <Title>Inclusão de Lançamento</Title>
+          <Title>{modalTitle} de Lançamento</Title>
           <ButtonClose setModalClose={setModalClose} icon="close" />
         </Header>
-        <Content>
-          <Radios />
+        <form onSubmit={handleFormSubmit}>
+          <Content>
+            <Radios block={block} type={transaction.map((t) => t.type)} />
 
-          <InputField>
-            <label>Descrição</label>
-            <Input type="text" placeholder="Informe uma descrição..." />
-          </InputField>
+            <InputField>
+              <label>Descrição</label>
+              <Input
+                type="text"
+                readOnly={block}
+                name="description"
+                required
+                style={{ color: `${block ? "#0007" : "black"}` }}
+                onChange={handleChange}
+                value={description}
+              />
+            </InputField>
 
-          <InputField>
-            <label>Categoria</label>
-            <Input type="text" placeholder="Informe uma categoria..." />
-          </InputField>
+            <InputField>
+              <label>Categoria</label>
+              <Input
+                type="text"
+                readOnly={block}
+                name="category"
+                required
+                style={{ color: `${block ? "#0007" : "black"}` }}
+                onChange={handleChange}
+                value={category}
+              />
+            </InputField>
 
-          <RowInput>
-            <InputFieldRow>
-              <label>Valor</label>
-              <Input type="number" min={0} step={10} />
-            </InputFieldRow>
+            <RowInput>
+              <InputFieldRow>
+                <label>Valor</label>
+                <Input
+                  type="number"
+                  min={0}
+                  name="value"
+                  style={{ color: `${block ? "#0007" : "black"}` }}
+                  readOnly={block}
+                  required
+                  onChange={handleChange}
+                  value={value}
+                />
+              </InputFieldRow>
 
-            <InputFieldRow>
-              <label>Período</label>
-              <Input type="date" />
-            </InputFieldRow>
-          </RowInput>
-        </Content>
-        <ButtonSave />
+              <InputFieldRow>
+                <label>Período</label>
+                <Input
+                  type="date"
+                  name="date"
+                  onChange={handleChange}
+                  style={{ color: `${block ? "#0007" : "black"}` }}
+                  readOnly={block}
+                  required
+                  value={date}
+                />
+              </InputFieldRow>
+            </RowInput>
+          </Content>
+          <ButtonPeriod
+            type="submit"
+            style={{ backgroundColor: `${isActionDelete ? "red" : "green"}` }}
+            className="waves-effect waves-light btn"
+          >
+            {isActionDelete ? "EXCLUIR" : "SALVAR"}
+          </ButtonPeriod>
+        </form>
       </Modal>
     </div>
   );
@@ -99,6 +173,20 @@ const RowInput = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const ButtonPeriod = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 140px;
+  margin-top: 5px;
+  margin-bottom: 30px;
+  padding: 17px 30px;
+  text-align: center;
+
+  z-index: 0;
 `;
 
 export default ContainerModal;

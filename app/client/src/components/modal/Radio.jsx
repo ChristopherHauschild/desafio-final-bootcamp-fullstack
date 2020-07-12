@@ -1,15 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-const Radios = () => {
+const Radios = (props) => {
+  const { type, block } = props;
+
+  const expenses = type.toString() === "-" ? true : false;
+  const revenue = type.toString() === "+" ? true : false;
+
+  const [isExpensesChecked, setIsExpensesChecked] = useState(expenses);
+  const [isRevenueChecked, setIsRevenueChecked] = useState(revenue);
+
+  const handleChange = (event) => {
+    if (event.target.id === "expenses") {
+      setIsExpensesChecked(true);
+      setIsRevenueChecked(false);
+    }
+    if (event.target.id === "revenue") {
+      setIsExpensesChecked(false);
+      setIsRevenueChecked(true);
+    }
+  };
+
   return (
     <ContainerRadio>
       <Label>
-        <input name="type" type="radio" defaultChecked />
+        <input
+          id="expenses"
+          checked={isExpensesChecked}
+          onChange={handleChange}
+          disabled={block}
+          name="type"
+          type="radio"
+        />
         <span style={{ fontSize: "1.5rem", color: "#8B0000" }}>Despesa</span>
       </Label>
       <Label>
-        <input name="type" type="radio" />
+        <input
+          onChange={handleChange}
+          disabled={block}
+          checked={isRevenueChecked}
+          name="type"
+          id="revenue"
+          type="radio"
+        />
         <span style={{ fontSize: "1.5rem", color: "green" }}>Receita</span>
       </Label>
     </ContainerRadio>
