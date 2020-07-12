@@ -1,0 +1,16 @@
+.Modal {
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  top: 80px;
+  left: 440px;
+  right: 440px;
+  bottom: 80px;
+  outline: none;
+  padding: 0px 30px;
+  background-color: #fff;
+  border-radius: 3px;
+  border: 1px solid #0003;
+  box-shadow: 1px 1px 2px 0px #0008;
+}
