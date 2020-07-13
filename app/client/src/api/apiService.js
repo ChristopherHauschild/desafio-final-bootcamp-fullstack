@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "httpsuuuuuu7://localhost:3001/api/transaction";
+const URL = "https://localhost:3001/api/transaction";
 
 const getAll = async () => {
   const res = await axios.get(URL);
