@@ -5,7 +5,7 @@
   Por ser o desafio final, desenvolveu-se o backend e frontend da aplicação utilizandos as tecnologias trabalhadas nos módulos anteriores.
 
 <div align="center">
-  <img src="https://github.com/ChristopherHauschild/palpite-box-semana-fullstack/blob/master/logo.png?raw=true">
+  <img src="https://github.com/ChristopherHauschild/desafio-final-bootcamp-fullstack/blob/master/CFP.gif?raw=true">
 </div>
 
 ## Tecnologias utilizadas: :computer:
