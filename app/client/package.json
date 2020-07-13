@@ -10,6 +10,8 @@
     "materialize-css": "1.0.0",
     "query-string": "6.13.1",
     "react": "16.13.1",
+    "react-alert": "7.0.2",
+    "react-alert-template-basic": "1.0.0",
     "react-dom": "16.13.1",
     "react-modal": "3.11.2",
     "react-scripts": "3.4.1",

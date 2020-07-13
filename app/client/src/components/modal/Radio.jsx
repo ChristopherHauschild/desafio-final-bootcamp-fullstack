@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const Radios = (props) => {
-  const { type, block } = props;
+  const { type, block, setTypeRadio } = props;
 
   const expenses = type.toString() === "-" ? true : false;
   const revenue = type.toString() === "+" ? true : false;
@@ -12,10 +12,12 @@ const Radios = (props) => {
 
   const handleChange = (event) => {
     if (event.target.id === "expenses") {
+      setTypeRadio("-");
       setIsExpensesChecked(true);
       setIsRevenueChecked(false);
     }
     if (event.target.id === "revenue") {
+      setTypeRadio("+");
       setIsExpensesChecked(false);
       setIsRevenueChecked(true);
     }

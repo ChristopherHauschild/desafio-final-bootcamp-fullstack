@@ -16,19 +16,44 @@ const Labels = ({ transactions }) => {
       return acc + curr;
     }, 0);
 
+  const balance = revenue - expenses;
   return (
     <LabelsContainer>
       <span>
         Lançamentos: <LabelData>{transactions.length}</LabelData>
       </span>
       <span>
-        Receitas: <LabelData>{revenue}</LabelData>
+        Receitas:{" "}
+        <LabelData style={{ color: "#1f1c57" }}>
+          {revenue.toLocaleString("pt-br", {
+            style: "currency",
+            currency: "BRL",
+          })}
+        </LabelData>
       </span>
       <span>
-        Despesas: <LabelData>{expenses}</LabelData>
+        Despesas:{" "}
+        <LabelData style={{ color: "#961209" }}>
+          {expenses.toLocaleString("pt-br", {
+            style: "currency",
+            currency: "BRL",
+          })}
+        </LabelData>
       </span>
       <span>
-        Saldo: <LabelData>{revenue - expenses}</LabelData>
+        Saldo:{" "}
+        <LabelData
+          style={{
+            color: `${
+              balance < 0 ? "#961209" : balance === 0 ? "black" : "#1f1c57"
+            }`,
+          }}
+        >
+          {(revenue - expenses).toLocaleString("pt-br", {
+            style: "currency",
+            currency: "BRL",
+          })}
+        </LabelData>
       </span>
     </LabelsContainer>
   );
@@ -45,8 +70,6 @@ const LabelsContainer = styled.div`
   border-bottom: 1px solid #0002;
 `;
 
-const LabelData = styled.span`
-  color: #008;
-`;
+const LabelData = styled.span``;
 
 export default Labels;

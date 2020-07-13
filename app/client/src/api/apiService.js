@@ -21,4 +21,37 @@ const getByDescription = async (description) => {
   return transactions;
 };
 
-export { getAll, getByDescription };
+const insertTransaction = async (transaction) => {
+  try {
+    const res = await axios.post(URL, transaction);
+    return res.data;
+  } catch (e) {
+    console.log(e.response);
+  }
+};
+
+const updateTransaction = async (transaction, id) => {
+  try {
+    const res = await axios.put(`${URL}/${id}`, transaction);
+    return res.data;
+  } catch (e) {
+    console.log(e.response);
+  }
+};
+
+const deleteTransaction = async (id) => {
+  try {
+    const res = await axios.delete(`${URL}/${id}`);
+    return res.data;
+  } catch (e) {
+    console.log(e.response);
+  }
+};
+
+export {
+  getAll,
+  getByDescription,
+  insertTransaction,
+  deleteTransaction,
+  updateTransaction,
+};

@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useAlert } from "react-alert";
 
 import Modal from "react-modal";
 import ButtonClose from "./ButtonClose";
 import Radios from "./Radio";
+
+import * as api from "../../api/apiService";
 
 import "./modal.css";
 
 Modal.setAppElement("#root");
 
 const ContainerModal = (props) => {
-  const { handleModalClose, transactions, id, type } = props;
+  const [typeRadio, setTypeRadio] = useState("");
+  const alert = useAlert();
+
+  const { handleModalClose, transactions, id, type, reload } = props;
   const transaction = transactions.filter((t) => t._id === id);
 
   const [description, setDescription] = useState(
@@ -45,9 +51,54 @@ const ContainerModal = (props) => {
     }
   };
 
-  const handleFormSubmit = (event) => {
+  const handleChangeType = (type) => {
+    setTypeRadio(type);
+  };
+
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(description, category, value, date);
+
+    const dateArr = date.toString().split("-");
+
+    const yearMonth = `${dateArr[0]}-${dateArr[1]}`;
+    const yearMonthDay = `${dateArr[0]}-${dateArr[1]}-${dateArr[2]}`;
+
+    if (type === "add") {
+      const transaction = {
+        description: description.toString(),
+        category: category.toString(),
+        value,
+        year: dateArr[0],
+        day: dateArr[2],
+        month: dateArr[1].toString(),
+        yearMonth: yearMonth.toString(),
+        yearMonthDay: yearMonthDay.toString(),
+        type: typeRadio,
+      };
+      await api.insertTransaction(transaction);
+      alert.show("Inclusão realizada com sucesso =)");
+      return;
+    } else if (type === "edit") {
+      const transaction = {
+        description: description.toString(),
+        category: category.toString(),
+        value: Number(value.toString()),
+        year: dateArr[0],
+        day: dateArr[2],
+        month: dateArr[1].toString(),
+        yearMonth: yearMonth.toString(),
+        yearMonthDay: yearMonthDay.toString(),
+        type: typeRadio,
+      };
+      reload("");
+      await api.updateTransaction(transaction, id);
+      alert.show("Edição realizada com sucesso =)");
+      return;
+    } else if (type === "delete") {
+      await api.deleteTransaction(id);
+      alert.show("Exclusão realizada com sucesso =)");
+      return;
+    }
   };
 
   return (
@@ -59,7 +110,11 @@ const ContainerModal = (props) => {
         </Header>
         <form onSubmit={handleFormSubmit}>
           <Content>
-            <Radios block={block} type={transaction.map((t) => t.type)} />
+            <Radios
+              block={block}
+              type={transaction.map((t) => t.type)}
+              setTypeRadio={handleChangeType}
+            />
 
             <InputField>
               <label>Descrição</label>
@@ -107,6 +162,8 @@ const ContainerModal = (props) => {
                 <Input
                   type="date"
                   name="date"
+                  min="2019-01-01"
+                  max="2021-12-31"
                   onChange={handleChange}
                   style={{ color: `${block ? "#0007" : "black"}` }}
                   readOnly={block}
@@ -147,7 +204,7 @@ const Content = styled.div`
   align-items: center;
 
   width: auto;
-  height: 100%;
+  height: 90%;
   margin-top: 3px;
   padding: 30px 10px;
   margin-bottom: 25px;
@@ -183,6 +240,7 @@ const ButtonPeriod = styled.button`
   width: 140px;
   margin-top: 5px;
   margin-bottom: 30px;
+  margin-left: 5px;
   padding: 17px 30px;
   text-align: center;
 

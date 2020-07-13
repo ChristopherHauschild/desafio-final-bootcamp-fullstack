@@ -8,7 +8,7 @@ const Card = (props) => {
     onClickButton(type, id);
   };
 
-  let bg = type === "+" ? "blue" : "red";
+  let bg = type === "+" ? "#abdcff" : "#ff8178";
 
   return (
     <CardContainer style={{ backgroundColor: `${bg}` }}>
@@ -17,7 +17,9 @@ const Card = (props) => {
         <Title>{category}</Title>
         <Description>{description}</Description>
       </Infos>
-      <Money>R$ {value}</Money>
+      <Money>
+        {value.toLocaleString("pt-br", { style: "currency", currency: "BRL" })}
+      </Money>
       <Actions>
         <Icon
           onClick={() => handleClickButton("edit")}

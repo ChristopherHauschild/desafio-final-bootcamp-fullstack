@@ -18,7 +18,7 @@ const Select = ({ changePeriod }) => {
           {periods.map((period) => {
             return (
               <option key={period.id} value={period.id}>
-                {period.value}
+                {`${period.value}`}
               </option>
             );
           })}

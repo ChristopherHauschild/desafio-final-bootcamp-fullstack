@@ -12,6 +12,7 @@ import Modal from "../modal";
 
 const Main = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [reload, setReload] = useState("");
   const [allTransactions, setAllTransactions] = useState([]);
   const [typeAction, setTypeAction] = useState("");
   const [idAction, setIdAction] = useState("");
@@ -30,7 +31,7 @@ const Main = (props) => {
     };
 
     getTransactions();
-  }, [description, period]);
+  }, [description, period, reload]);
 
   const handleChangePeriod = (newValue) => {
     setPeriod(newValue);
@@ -51,6 +52,10 @@ const Main = (props) => {
     setIsModalOpen(false);
   };
 
+  const handleReload = (value) => {
+    setReload(value);
+  };
+
   return (
     <ContainerMain>
       <Select changePeriod={handleChangePeriod} />
@@ -67,6 +72,7 @@ const Main = (props) => {
 
       {isModalOpen && (
         <Modal
+          reload={handleReload}
           transactions={allTransactions}
           type={typeAction}
           id={idAction}
