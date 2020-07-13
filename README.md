@@ -35,7 +35,7 @@ O deploy da aplicação ficou à cargo do Heroku.
 
 ### Maiores informações: :pencil:
 
-Você pode encontrar outras atividades e aplicações desenvolvidas durante o Bootcamp através deste <a href="">link</a>.
+Você pode encontrar outras atividades e aplicações desenvolvidas durante o Bootcamp através deste <a href="https://github.com/ChristopherHauschild/bootcamp-fullstack-igti">link</a>.
 <hr>
 
 Projeto desenvolvido com horas a frente do :computer: por Christopher Hauschild Schott
