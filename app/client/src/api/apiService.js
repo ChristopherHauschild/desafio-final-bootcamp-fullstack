@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "https://localhost:3001/api/transaction";
+const URL = "https://christopher-desafio-final.herokuapp.com/api/transaction";
 
 const getAll = async () => {
   const res = await axios.get(URL);

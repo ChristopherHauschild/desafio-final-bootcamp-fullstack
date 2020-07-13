@@ -56,8 +56,6 @@ const ContainerModal = (props) => {
   };
 
   const handleFormSubmit = async (event) => {
-    event.preventDefault();
-
     const dateArr = date.toString().split("-");
 
     const yearMonth = `${dateArr[0]}-${dateArr[1]}`;
